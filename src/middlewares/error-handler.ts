@@ -7,8 +7,6 @@ export type ApplicationError = {
 };
 
 export function handleApplicationErrors(err: ApplicationError | Error, _req: Request, res: Response, next: NextFunction) {
-  console.log(err);
-
   if (err.name === "ConflictError") {
     return res.status(httpStatus.CONFLICT).send({
       message: err.message,
@@ -28,7 +26,6 @@ export function handleApplicationErrors(err: ApplicationError | Error, _req: Req
   }
 
   /* eslint-disable-next-line no-console */
-  console.log(err.name);
   res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
     error: "InternalServerError",
     message: "Internal Server Error",

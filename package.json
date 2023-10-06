@@ -7,6 +7,7 @@
     "dev": "nodemon ./src/server.ts",
     "test:load-envs": "dotenv -e .env.test",
     "test": "npm run test:load-envs jest",
+    "test:unit": "npm run test:load-envs -- jest -- --testMatch **/tests/unit/*.test.ts",
     "test:coverage": "npm run test:load-envs -- jest -- --coverage -i",
     "migrate:test": "npm run test:load-envs prisma migrate deploy",
     "migrate:dev": "prisma migrate dev"

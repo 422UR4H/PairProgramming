@@ -31,6 +31,7 @@ async function getRentalById(rentalId: number) {
 async function createRental(rentalInput: RentalInput) {
   const { userId, moviesId } = rentalInput;
 
+  if(moviesId.length < 1 || moviesId.length > 4) throw notFoundError("Cannot rent 0 or more than 4 movies");
   const user = await getUserForRental(userId);
   await checkUserAbleToRental(userId);
   await checkMoviesValidForRental(moviesId, user);
@@ -59,11 +60,14 @@ async function checkUserAbleToRental(userId: number) {
 }
 
 async function checkMoviesValidForRental(moviesId: number[], user: User) {
+  console.log(moviesId)
   for (let i = 0; i < moviesId.length; i++) {
     const movieId = moviesId[i];
     const movie = await moviesRepository.getById(movieId);
+    console.log(movie);
 
     if (!movie) throw notFoundError("Movie not found.");
+    
     if (movie.rentalId) {
       throw movieAlreadyInRental("Movie already in a rental.");
     }
